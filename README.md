@@ -47,26 +47,18 @@ The file **preprocessing.py** provides automated routines that load the raw audi
 
 Run these commands to obtain the matrices needed for our baseline models:
 ```bash
-python preprocessing.py --task 1 --input_path DATASETS/Task1 --training_set train100 --num_mics 1
 python preprocessing.py --task 2 --input_path DATASETS/Task2 --num_mics 1 --frame_len 100
 ```
-The two tasks of the challenge require different pre-processing.
-
-For **Task1** the function returns 2 numpy arrays contatining:
-* Input multichannel audio waveforms (3d noise+speech scenarios) - Shape: [n_data, n_channels, n_samples].
-* Output monoaural audio waveforms (clean speech) - Shape [n_data, 1, n_samples].
-
 For **Task2** the function returns 2 numpy arrays contatining:
 * Input multichannel audio spectra (3d acoustic scenarios): Shape: [n_data, n_channels, n_fft_bins, n_time_frames].
 * Output seld matrices containing the class ids of all sounds present in each 100-milliseconds frame alongside with their location coordinates - Shape: [n_data, n_frames, ((n_classes * n_class_overlaps) + (n_classes * n_class_overlaps * n_coordinates))], where n_class_overlaps is the maximum amount of possible simultaneous sounds of the same class (3) and n_coordinates refers to the spatial dimensions (3).
 
 
 ## Baseline models
-We provide baseline models for both tasks, implemented in PyTorch. For task 1 we use a Beamforming U-Net and for task 2 an augmented variant of the SELDNet architecture. Both models are based on the single-microphone dataset configuration. Moreover, for task 1 we used only Train100 as training set.
+We provide baseline models for both tasks, implemented in PyTorch. For task 2 an augmented variant of the SELDNet architecture. Both models are based on the single-microphone dataset configuration. Moreover, for task 1 we used only Train100 as training set.
 
 To train our baseline models with the default parameters run:
 ```bash
-python train_baseline_task1.py
 python train_baseline_task2.py
 ```
 These models will produce the baseline results mentioned in the paper.
@@ -75,7 +67,6 @@ GPU is strongly recommended to avoid very long training times.
 
 Alternatively, it is possible to download our pre-trained models with these commands:
 ```bash
-python download_baseline_models.py --task 1 --output_path RESULTS/Task1/pretrained
 python download_baseline_models.py --task 2 --output_path RESULTS/Task2/pretrained
 ```
 These models are also available for manual download [here](https://drive.google.com/drive/u/1/folders/1rTvlzoQM6ZxVTZe6PSJ_-yHx-uHa5z4z).
